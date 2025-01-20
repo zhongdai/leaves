@@ -1,10 +1,10 @@
 # leaves
 
 [![version](https://img.shields.io/badge/version-0.8.0-yellow.svg)](https://semver.org)
-[![Build Status](https://travis-ci.org/dmitryikh/leaves.svg?branch=master)](https://travis-ci.org/dmitryikh/leaves)
-[![GoDoc](https://godoc.org/github.com/dmitryikh/leaves?status.png)](https://godoc.org/github.com/dmitryikh/leaves)
-[![Coverage Status](https://coveralls.io/repos/github/dmitryikh/leaves/badge.svg?branch=master)](https://coveralls.io/github/dmitryikh/leaves?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/dmitryikh/leaves)](https://goreportcard.com/report/github.com/dmitryikh/leaves)
+[![Build Status](https://travis-ci.org/zhongdai/leaves.svg?branch=master)](https://travis-ci.org/zhongdai/leaves)
+[![GoDoc](https://godoc.org/github.com/zhongdai/leaves?status.png)](https://godoc.org/github.com/zhongdai/leaves)
+[![Coverage Status](https://coveralls.io/repos/github/zhongdai/leaves/badge.svg?branch=master)](https://coveralls.io/github/zhongdai/leaves?branch=master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/zhongdai/leaves)](https://goreportcard.com/report/github.com/zhongdai/leaves)
 
 ![Logo](logo.png)
 
@@ -15,32 +15,32 @@ _leaves_ is a library implementing prediction code for GBRT (Gradient Boosting R
 **NOTE**: Before `1.0.0` release the API is a subject to change.
 
 ## Features
-  * General Features:
-    * support parallel predictions for batches
-    * support sigmoid, softmax transformation functions
-    * support getting leaf indices of decision trees
-  * Support LightGBM ([repo](https://github.com/Microsoft/LightGBM)) models:
-    * read models from `text` format and from `JSON` format
-    * support `gbdt`, `rf` (random forest) and `dart` models
-    * support multiclass predictions
-    * addition optimizations for categorical features (for example, _one hot_ decision rule)
-    * addition optimizations exploiting only prediction usage
-  * Support XGBoost ([repo](https://github.com/dmlc/xgboost)) models:
-    * read models from binary format
-    * support `gbtree`, `gblinear`, `dart` models
-    * support multiclass predictions
-    * support missing values (`nan`)
-  * Support scikit-learn ([repo](https://github.com/scikit-learn/scikit-learn)) tree models (experimental support):
-    * read models from pickle format (protocol `0`)
-    * support `sklearn.ensemble.GradientBoostingClassifier`
 
+- General Features:
+  - support parallel predictions for batches
+  - support sigmoid, softmax transformation functions
+  - support getting leaf indices of decision trees
+- Support LightGBM ([repo](https://github.com/Microsoft/LightGBM)) models:
+  - read models from `text` format and from `JSON` format
+  - support `gbdt`, `rf` (random forest) and `dart` models
+  - support multiclass predictions
+  - addition optimizations for categorical features (for example, _one hot_ decision rule)
+  - addition optimizations exploiting only prediction usage
+- Support XGBoost ([repo](https://github.com/dmlc/xgboost)) models:
+  - read models from binary format
+  - support `gbtree`, `gblinear`, `dart` models
+  - support multiclass predictions
+  - support missing values (`nan`)
+- Support scikit-learn ([repo](https://github.com/scikit-learn/scikit-learn)) tree models (experimental support):
+  - read models from pickle format (protocol `0`)
+  - support `sklearn.ensemble.GradientBoostingClassifier`
 
 ## Usage examples
 
 In order to start, go get this repository:
 
 ```sh
-go get github.com/dmitryikh/leaves
+go get github.com/zhongdai/leaves
 ```
 
 Minimal example:
@@ -51,7 +51,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/dmitryikh/leaves"
+	"github.com/zhongdai/leaves"
 )
 
 func main() {
@@ -73,7 +73,7 @@ In order to use XGBoost model, just change `leaves.LGEnsembleFromFile`, to `leav
 
 ## Documentation
 
-Documentation is hosted on godoc ([link](https://godoc.org/github.com/dmitryikh/leaves)). Documentation contains complex usage examples and full API reference. Some additional information about usage examples can be found in [leaves_test.go](leaves_test.go).
+Documentation is hosted on godoc ([link](https://godoc.org/github.com/zhongdai/leaves)). Documentation contains complex usage examples and full API reference. Some additional information about usage examples can be found in [leaves_test.go](leaves_test.go).
 
 ## Compatibility
 
@@ -93,39 +93,39 @@ benchmarks were run by means of golang test framework: `go test -bench`. See
 
 Single thread:
 
-| Test Case | Features | Trees | Batch size |  C API  | _leaves_ |
-|-----------|----------|-------|------------|---------|----------|
-| LightGBM [MS LTR](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment) | 137 |500 | 1000 | 49ms | 51ms |
-| LightGBM [Higgs](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment) | 28 | 500 | 1000 | 50ms | 50ms |
-| LightGBM KDD Cup 99* | 41 | 1200 | 1000 | 70ms | 85ms |
-| XGBoost Higgs | 28 | 500 | 1000 | 44ms | 50ms |
+| Test Case                                                                                                       | Features | Trees | Batch size | C API | _leaves_ |
+| --------------------------------------------------------------------------------------------------------------- | -------- | ----- | ---------- | ----- | -------- |
+| LightGBM [MS LTR](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment) | 137      | 500   | 1000       | 49ms  | 51ms     |
+| LightGBM [Higgs](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment)  | 28       | 500   | 1000       | 50ms  | 50ms     |
+| LightGBM KDD Cup 99\*                                                                                           | 41       | 1200  | 1000       | 70ms  | 85ms     |
+| XGBoost Higgs                                                                                                   | 28       | 500   | 1000       | 44ms  | 50ms     |
 
 4 threads:
 
-| Test Case | Features | Trees | Batch size |  C API  | _leaves_ |
-|-----------|----------|-------|------------|---------|----------|
-| LightGBM [MS LTR](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment) | 137 |500 | 1000 | 14ms | 14ms |
-| LightGBM [Higgs](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment) | 28 | 500 | 1000 | 14ms | 14ms |
-| LightGBM KDD Cup 99* | 41 | 1200 | 1000 | 19ms | 24ms |
-| XGBoost Higgs | 28 | 500 | 1000 | ? | 14ms |
+| Test Case                                                                                                       | Features | Trees | Batch size | C API | _leaves_ |
+| --------------------------------------------------------------------------------------------------------------- | -------- | ----- | ---------- | ----- | -------- |
+| LightGBM [MS LTR](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment) | 137      | 500   | 1000       | 14ms  | 14ms     |
+| LightGBM [Higgs](https://github.com/Microsoft/LightGBM/blob/master/docs/Experiments.rst#comparison-experiment)  | 28       | 500   | 1000       | 14ms  | 14ms     |
+| LightGBM KDD Cup 99\*                                                                                           | 41       | 1200  | 1000       | 19ms  | 24ms     |
+| XGBoost Higgs                                                                                                   | 28       | 500   | 1000       | ?     | 14ms     |
 
 (?) - currenly I'm unable to utilize multithreading form XGBoost predictions by means of python bindings
 
-(*) - KDD Cup 99 problem involves continuous and categorical features simultaneously
+(\*) - KDD Cup 99 problem involves continuous and categorical features simultaneously
 
 ## Limitations
 
-  * LightGBM models:
-    * limited support of transformation functions (support only sigmoid, softmax)
-  * XGBoost models:
-    * limited support of transformation functions (support only sigmoid, softmax)
-    * could be slight divergence between C API predictions vs. _leaves_ because of floating point convertions and comparisons tolerances
-  * scikit-learn tree models:
-    * no support transformations functions. Output scores is _raw scores_ (as from `GradientBoostingClassifier.decision_function`)
-    * only pickle protocol `0` is supported
-    * could be slight divergence between sklearn predictions vs. _leaves_ because of floating point convertions and comparisons tolerances
+- LightGBM models:
+  - limited support of transformation functions (support only sigmoid, softmax)
+- XGBoost models:
+  - limited support of transformation functions (support only sigmoid, softmax)
+  - could be slight divergence between C API predictions vs. _leaves_ because of floating point convertions and comparisons tolerances
+- scikit-learn tree models:
+  - no support transformations functions. Output scores is _raw scores_ (as from `GradientBoostingClassifier.decision_function`)
+  - only pickle protocol `0` is supported
+  - could be slight divergence between sklearn predictions vs. _leaves_ because of floating point convertions and comparisons tolerances
 
 ## Contacts
 
 In case if you are interested in the project or if you have questions, please contact with me by
-email: khdmitryi ```at``` gmail.com
+email: khdmitryi `at` gmail.com
