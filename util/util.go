@@ -95,6 +95,28 @@ func (p *stringParams) Compare(key string, rhs string) error {
 	return nil
 }
 
+func (p *stringParams) CompareIn(key string, rhs []string) error {
+	valueStr, isFound := (*p)[key]
+	if !isFound {
+		return fmt.Errorf("no %s field", key)
+	}
+
+	if !contains(rhs, valueStr) {
+		return fmt.Errorf("only %s in %s is supported", key, strings.Join(rhs, ","))
+	}
+
+	return nil
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
 func (p *stringParams) ToStrSlice(key string) ([]string, error) {
 	valueStr, isFound := (*p)[key]
 	if !isFound {
@@ -267,7 +289,7 @@ func SoftmaxFloat64Slice(rawValues []float64, outputValues []float64, startIndex
 	}
 	if sum != 0.0 {
 		inv_sum := 1.0 / sum
-		for i := startIndex; i < startIndex + len(rawValues); i++ {
+		for i := startIndex; i < startIndex+len(rawValues); i++ {
 			outputValues[i] *= inv_sum
 		}
 	}
